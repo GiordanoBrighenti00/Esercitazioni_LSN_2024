@@ -1,0 +1,19 @@
+Modelli in Keras: noi useremo il modello sequential: creare una successione di Layer, si aggiunge ogni layer con il metodo .add(): bisogna specificare:
+il numero di input (layer di ingresso), la funzione di attivazione.
+Aggiungere, eventualmente, un layer di dropout: si impone lo spegnimento casuale dell'output di un layer precedente ad un layer successivo: una rete riesce a generalizzare bene
+quando il risultato è indipendente dall'architettura della rete. 
+Se usiamo funzioni di attivazione a codominio limitato (es. sigmoide) potrebbero sorgere problemi: input troppo piccolo o troppo grande: pendenza molto bassa -> problemi con 
+la SGD: usare una normalizzazione.
+In casi complicati, può essere necessaria una regolarizzazione, aggiungendo Gaussian Noise ai dati durante il passaggio per la rete neurale.
+Nell'ultimo layer si usa la softmax, cioè genera un vettore di probabilità (normalizzato).
+
+"Compilare" il modello: scegliere cost function, il tipo di ottimizzatore e la metrica: si richiama il metodo .compile(optimizer = 'sgd', loss = losses.Categorical_Crossentropy(), metrics = ...)
+Posso usare altri otimizzatori, evoluzioni della SGD: Adam, Adagrad...
+
+Metriche: sono le funzioni costo applicate al dataset di test.
+
+E' possibile salvare il modello keras costruito in un formato .h5 con model.save(filepath=< >).E' possibile poi caricarlo con models.load_model
+
+shuffle=True permette dirimescolare i dati contenuti nei batch alla fine di ogni epoca, in modo da rendere le successive epoche le più scorrelate possibili.
+
+Esercizio 11.2: controllare che il modello addestrato estrapoli correttamente per una ascissa estratta al di fuori del compatto [-1 , +1]
