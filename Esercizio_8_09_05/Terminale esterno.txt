@@ -1,1 +1,0 @@
-WinSCP su terminale tolab.fisica.unimi.it
