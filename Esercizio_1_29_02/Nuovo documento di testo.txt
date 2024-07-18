@@ -1,0 +1,17 @@
+In laboratorio
+
+Algoritmo deterministico: calcolare deviazione standard della media dei casuali generati.
+Quando generiamo numeri correlati, l'incertezza del valor medio non è la deviazione standard della media.
+Soluzione: media a blocchi: Raggruppo le misure in batch: misuro il valor medio di ciascun blocco: se ci
+sono abbastanza numeri in ogni blocco mi aspetto che la correlazione sia sparita. Ora la singola misura è
+il valor medio all'interno del blocco. (A_i è il valor medio all'interno di goni blocco)
+
+Rifare in C++ l'esercizio:
+in C++ usare i numeri generati on th fly: non salvarli in un vettore
+
+
+ESEGUIRE DA TERMINALE UN FILE ESEGUIBILE PRODOTTO DALL'ISTRUZIONE make IN ACCORDO CON IL MAKEFILE: ./make.exe
+
+a seconda del nome del file eseguibile:		./<nome>.exe
+
+
