@@ -1,0 +1,19 @@
+Machine Learning: riconoscimento immagini DATASET MNIST
+
+os: libreria di interfaccia grafica da usare eventualmente
+
+to_categorical: trasforma la label in un vettore one_shot: Es: 5 -> [0 , 0 , 0 , 0 , 0 , 1 , 0 , 0 , 0 , 0]
+
+Se voglio usare una FFNN anzichè una CNN, devo linearizzare i dati relativi alle immagini: uso reshape().
+
+Dropout: utilizzato soltanto nella parte di training
+
+Softmax: produce in output alla rete una vettore delle probabilità di trovarsi in una determinata classe.
+
+Bisogna impostare addestramenti con tante epoche per ottimizzare un modello su 60000 immagini.
+
+Guardare le performance della rete neurale al variare della scelta dell'ottimizzatore.
+
+GIMP: Le cifre vanno scritte in bianco con sfondo nero
+
+Come caricare GIMP?
