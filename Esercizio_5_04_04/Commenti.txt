@@ -1,8 +1,0 @@
-Non rompere il principio del bilancio dettagliato: è fortemente sconsigliato far variare il passo durante il rando m walk per ottimizzare
-la probabilità di accettazione: il passo va tenuto const e va modificato dopo ogni esecuzione per programma, per ottenere le migliori 
-probabilità di accettazione globali.
-
-I blocchi devono contenere un numero sufficiente di step da valutare ragionevolmente il raggio quadratico medio.
-
-Il Metropolis non ha bisogno di conoscere le normalizzazioni delle distribuzioni di probabilità: si semplificano
-
