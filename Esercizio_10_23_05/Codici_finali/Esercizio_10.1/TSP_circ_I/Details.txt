@@ -1,0 +1,1 @@
+Risultati ottenuti impostando N = 45, p_m = 0.13 + 0.005 * rank , p_c = 0.8, N_swap = 5

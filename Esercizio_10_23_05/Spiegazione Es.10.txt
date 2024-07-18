@@ -1,0 +1,37 @@
+La lunghezza del messaggio spedito da ogni processo è la stessa.
+La size viene stabilita dalla linea di comando. irecv[3] : vettore di 3 interi
+MPI_Gather : chiamata collettiva: spedire un dato intero che posizionerò su irecv verso il nodo 0 per il gruppo di riferimento MPI_COMM_WORLD. 
+
+--- Per usare il parallel computing ocn Replit: 
+Il nodo [0] è indexato come 1.
+
+INCLUDERE IN NIX pkgs.mpich
+
+Bisogna sempre compilare con mpicxx <nome_main> 
+ed eseguire con mpiexec -np 3 ./a.out
+
+--- Se invece si usano le macchine del laboratorio:
+
+module load mpi/mpich-x86_64   // Loading del modulo, va fattan per ogni connessione
+
+
+MPI_REDUCE è una collettiva che produce operazioni sui dati: riceve i dati da tutti e opera su di essi (Es: Montecarlo per raccogliere statistica per raccogliere le medie: usare MPI_REDUCE )
+MPI_COMM_SPLIT serve per separare il gruppo in sotto-gruppi. Es: definisco icolor (sottogruppo) e ikey (chi è il master del sottogruppo: 1 è il master): matrice per identificare i 4 indici.
+	Il nome del nuovo comunicatore è introdotto con MPI_Comm. Siamo ancora nel paradigma single programme multiple data, ma così spezzetto in due sottogruppi dove uno è il master
+	e gli altri no.
+
+ALLARME: Comunicazioni bidirezionali: rischiano di diventare punti morti nel codice.
+!!! : Il buffer di sistema ha una dimensione limitata: deve essere liberato, serve una comunicazione di ricezione per essere svuotato. Es: abbiamo chiamato un MPI_SEND e poi il MPI_RECIEVE per
+una comunicazione bidirezionale, ma il buffer non viene svuotato per il recieve (punto morto).
+Due modi per chiamare send-receive: modi bloccanti e non-bloccanti: gli ultimi permettono di chiamare la chiamata successiva;
+itag è una bandiera che identifica la comunicazione (posso avere più comunicazioni bidirezionali simultaneamente)
+
+
+SU REPLIT USARE AL MASSIMO 7 NODI PARALLELI !!!	
+
+Ogni nodo deve leggere dei Primes diversi per quanto riguarda il generatore di numeri PseudoCasuali
+
+----
+
+itag si limita a identificare il tipo di messaggio,
+ricorda che il buffer della variabile va definito come prima cosa inserendo &<var>
