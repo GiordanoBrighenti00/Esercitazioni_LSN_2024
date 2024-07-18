@@ -1,0 +1,10 @@
+ESERCITAZIONE 7
+
+Useremo SOLO Metropolis per campionare la distribuzione di Boltzmann. Distribuzione g(r) è un istogramma: index_gofr è l'indice che identifica dove iniziano gli indici per i bin dell'istogramma. _vtail e _ptail: correzioni di coda.
+Lavoriamo con un sistema LJ con ensemble canonico (SIMULATION TYPE = 1). La variabile di input non è più time_step ma il Delta del Metropolis. In properties.dat andrà inserita GOFR con il numero di bins _n_bins (devono essere circa 100).
+ogni bin della g(r) è una variabile nuova nel vettore delle misure. La g(r) si normalizza all'interno di SYS.averages(). 
+
+Esercizio 7.2: studiare l'autocorrelazione dell'energia potenziale. Se la grandezza si decorrela dopo k step, scegliere la dimensione del blocco pari ad almeno 10*k step. Ripetere il calcolo al variare della size del blocco:
+osservare che l'incertezza, al variare della dimensione del blocco, cresce fino a saturare quando sparisce la correlazione. Voglio 3 grafici: incertezza al variare del batch-size per solido, liquido, gassoso.
+
+Esercizio 7.4: la g(r) cacolata con la dinamica molecolare converge alla soluzione delle equazioni del moto (di Hamilton). (Equivalenza tra canonico e microcanonico). (Riflettere attentamente sui risulatati).
