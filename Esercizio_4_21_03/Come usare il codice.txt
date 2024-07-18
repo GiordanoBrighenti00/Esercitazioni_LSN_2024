@@ -1,0 +1,54 @@
+CARTELLE INPUT OUTPUT SOURCE --> CONFIG --> contenuti tre file config.xyz fa partire le coordinate delle posizioni iniziali del reticolo (per il gas Lenard-Jones si parte comunque dal reticolo cristallino).
+Non c'è alcuna coordinata con modulo > 0.5. Il codice le assume scritte come misura del lato ( x è in [-L/2 , +L/2] ). Scritte così non dipendono dalla densità del sistema: il lato L è determinato dalla densità 
+data in input dal sistema. Config.fcc è una copia di backup, nel caso il file originale sia sovrascitto. ENDPROPERTIES è la riga di testo che interrompe, all'interno del file di testo, la lettura.
+
+Il codice usa la libreria Armadillo di C++. Per installarlo su Replit: creare cartella con dentro il file tgz. Per untilizzare armadillo aprire file replit.nix e
+aggiungere la riga pkgs.armadillo, salvare + uscire + rientrare.
+
+Come scrivere il codice: usare la classe particle.h : non è necessario usare la classe particle.h per l'esercitazione.
+La classe system.h è un oggetto, o meglio un campo: è un vettore di particelle
+NOTAZIONE: tutti i data_membri sono preceduti dalla notazione _<name>.
+Con field posso creare un tensore di oggetti: è estemamente comodo.
+
+ATTENZIONE: Non decommentare la riga SYS.write_XYZ(nconf): perchè se stampo per 100000 passi 100000 configurazioni riempio immediatamente il disco rigido del computer: Non farlo!!! 
+
+SYS.initialize() è il metodo che setta il generatore di numeri pseudocasuali: dopodichè prepara il file per campionare l'accettazione delle mosse (nel caso della dinamica molecolare la prob. di accettazione
+è sempre 1). Apre il file input.dat e legge la proprietà: dobbiamo accertarci che SIMULATION_TYPE è fissata a 0 per la dinamica molecolare.
+RESTART 0: rifai la simulaizone da capo; RESTART 1: riprendi dalla simulazione precedente; TEMP è la temperatura in unità di LJ (non c'è più la const di Boltzmann). Conoscendo NPART, effettuo un riscalamento 
+delle forze con rezie(_npart). Per inizializzare la posizione della particella: _particle(i).initialize();
+Usando Verlet il passo di integrazione deve essere entro 0.1 fs. (0.0005 in unità adimensionali). read_configuration() legge le tre coordinate delle particelle. Invoca _particle(i).setposition e
+applica il metodo pbc: applica le periodic boundary conditions per riportare dentro punti al fuori della scatola cubica.
+
+SYS.initialize_velocities() serve per calcolare le posizioni precedenti i-1: applico il campuionamento della distribuzione di Maxwell-Boltzmann: v_i è varibaile gaussiana con media zero e varianza T. Ma NON
+basta campionare le velocità a caso: ho introdotto drift di velcità totali nel sistema: la somma non è zero e il sistema trasla: ma deve essere fermo nel frame del laboratorio. Dunque devo SOTTRARRE
+tale traslazione (ho eliminato il centro di massa delle velcoità). Ma avendo sottratto la velocità di drift ho cambiato la temperatura. Devo moltiplicare le velocità per un fattore di scala che mi rende la
+temperatura simile a quella originale. Devo generate x(t - delta_t): uso le velocità: x_{i-1} = x_{i} - v_{i} * delta_t: come si riporta la posizione x_{i-1} all'interno della scatola? uso pbc.
+
+SYS.initialize_properties(): coutp apre il file in cui salverò i risultati. Tutte le proprietà saranno cacciate in un unico vettore: vec[0] sarà ad esempio la potential energy.
+
+SYS.block_reset() blocca il reset
+
+SYS.Force(int,int): devo fornire l'indice della particella: Faccio un ciclo sulle N particelle tranne quella corrente j-esima e calcola al distanza tra i e j
+
+SYS.measure() misura le proprietà: [E_TOT , E_CIN , T ] a cui va aggiunta la pressione. faccio cicli for per le particelle i-esime e j-esime: ne misuro la dist. con coord. attuali. Devo inserire il 
+cutoff per il potenziale per evitare l'anisotropia. La divisione /(double)(_npart) permette di utilizzare l'algoritmo cambiando il numero di particelle da 108 a numero arbitrario.
+
+SYS.write__XYZ(): scrivere le configurazione per poter fare il filmato. % nella libreria Armadillo identifica il prodotto elemento per elemento tra vettori.
+
+SYS.finalize(): ...
+
+anzichè salvare le velocità potrei salvare x_{i-1} e x_{i}, perchè altrimenti avrei un errore piccolo su x_{i-1} che altererà di poco la traiettoria.
+
+-----ORA COMINCIAMO CON LA SIMULAZIONE  --- 
+Se la simulazione è di dinamica molecolare, inizio con il Verlet: effettua un ciclo for su ogni particella dove aggiorna tutte e tre le dimensioni
+Per ripartire con la simulazione: devi partire dall'output e metterlo in input. MAKEFILE: make remove ripulisce completamente l'output
+Nell'ensemble microcanonico l'energia totale è conservata ma non la temperatura: da una configurazione cristallina a una gassosa LJ, l'energia potenziale è salita: è crollata l'energia cinetica.
+Problema: voglio simulazione a temperatura che voglio io: serve un'equilibrazione: fare tante prove e trovare a quale temperatura sia meglio far crollare la temperatura attorno al valore prescelto.
+Il gas è a parte: la temperatura non decresce: bensì cresce!!!
+------------------------------------
+---CONVERTIRE FILE .tgz in .zip su Windows
+
+tar xvf <namefile>.tgz
+
+OVITO è il nome del programma di visualizzazione grafica delle simulazioni numeriche
+
