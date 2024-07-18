@@ -1,0 +1,27 @@
+CONVERGENZA ENTRO 500 STEP
+
+Number_specimens = 15
+Mutation_prob	= 0.25
+Crossover_prob	= 0.80
+
+Number_specimens = 25
+Mutation_prob	= 0.24
+Crossover_prob	= 0.80
+
+Number_specimens = 45
+Mutation_prob	= 0.17
+Crossover_prob	= 0.80
+
+Number_specimens = 70
+Mutation_prob	= 0.075
+Crossover_prob	= 0.80
+
+Number_specimens = 100
+Mutation_prob	= 0.05
+Crossover_prob	= 0.80
+
+SUL QUADRATO
+
+Number_specimens = 100
+Mutation_prob	= 0.116
+Crossover_prob	= 0.792

@@ -1,0 +1,2 @@
+Attenzione a fare il steady state (sostituire due cromosomi per generazione), perchè mi fa intrappolare in 
+un minimo locale.
